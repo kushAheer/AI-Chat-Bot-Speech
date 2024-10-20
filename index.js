@@ -15,11 +15,11 @@ const SESSION_ID = uuidv4(); // Generate a unique session ID for each user
 const GEN_API_KEY = process.env.GEMINI_API_KEY;
 
 // Path to your service account key file
-const KEYFILE_PATH = path.join(__dirname, 'service-account-key.json');
+// const KEYFILE_PATH = path.join(__dirname, 'service-account-key.json');
 
-// Create a new session client
-const sessionClient = new dialogflow.SessionsClient({ keyFilename: KEYFILE_PATH });
-const sessionPath = sessionClient.projectAgentSessionPath(PROJECT_ID, SESSION_ID);
+// // Create a new session client
+// const sessionClient = new dialogflow.SessionsClient({ keyFilename: KEYFILE_PATH });
+// const sessionPath = sessionClient.projectAgentSessionPath(PROJECT_ID, SESSION_ID);
 
 const genAI = new GoogleGenerativeAI(GEN_API_KEY);
 
@@ -39,20 +39,20 @@ const io = require('socket.io')(server);
 
 io.on('connection', function (socket) {
     socket.on('chat message', async (text) => {
-        const request = {
-            session: sessionPath,
-            queryInput: {
-                text: {
-                    text: text,
-                    languageCode: 'en-US',
-                },
-            },
-        };
+        // const request = {
+        //     session: sessionPath,
+        //     queryInput: {
+        //         text: {
+        //             text: text,
+        //             languageCode: 'en-US',
+        //         },
+        //     },
+        // };
 
         try {
-            const responses = await sessionClient.detectIntent(request);
-            const result = responses[0].queryResult;
-            const aiText = result.fulfillmentText;
+            // const responses = await sessionClient.detectIntent(request);
+            // const result = responses[0].queryResult;
+            // const aiText = result.fulfillmentText;
 
             const model = genAI.getGenerativeModel({
                 model: "gemini-1.5-flash",
